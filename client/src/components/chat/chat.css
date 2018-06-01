@@ -1,0 +1,123 @@
+.chat_component {
+  height: 70vh;
+  width: 60vw;
+  display: block;
+  margin: auto;
+  background-color: rgba(255,255,255,.5);
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  margin-top: 10%;
+}
+
+.chat {
+  width: 80%;
+  padding: 1rem;
+  height: 100%;
+}
+
+.rooms {
+  position: relative;
+  width: 15%;
+}
+
+
+.rooms {
+  list-style: none;
+  overflow-x: visible;
+}
+
+.rooms li:hover, .rooms:hover {
+  color: #d7f2fe
+}
+
+h3 {
+  text-align: center;
+}
+
+
+.modal_button {
+  position: absolute;
+  bottom: 0;
+}
+
+.modal_button button {
+  background-color: #d7f2fe;
+  border: 1px solid #d7f2fe;
+  color: white;
+}
+
+.rooms span:hover {
+  background-color: white;
+  color: #d7f2fe;
+  border: 1px solid white;
+}
+
+#messageForm {
+  height: 25%;
+}
+
+.users_chats {
+  background-color: rgba(255,255,255, .6);
+  height: 75%;
+  margin: 0;
+  overflow: scroll;
+  padding-left: .5rem;
+}
+
+.list-group li:before {
+    content: "•"; /* Insert content that looks like bullets */
+    padding-right: 8px;
+    color: #2ED422; /* Or a color you prefer */
+}
+
+.list-group {
+  padding-left: .5rem;
+  margin: 0;
+  margin-top: .5rem;
+}
+
+li span {
+  font-weight: bold;
+  color: #909090;
+}
+
+#message {
+  padding: 0.75rem 1rem;
+  background: none;
+  margin: auto;
+  background: #fff;
+  font-weight: bold;
+  margin-top: .5rem;
+  width: 100%;
+  outline: none;
+  /* margin-bottom: 1rem; */
+}
+
+.btn {
+  background-color: white;
+  width: 100%;
+  text-align: center;
+}
+
+.btn span {
+  background-color: rgba(255,255,255, .6);
+  padding: .5rem;
+}
+
+.btn span:hover {
+  background-color: #d7f2fe;
+}
+
+.active {
+  width: 20%;
+  background-color: rgba(255,255,255, .6);
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  color: black;
+}

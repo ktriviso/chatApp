@@ -1,0 +1,21 @@
+{
+  "name": "iochat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "*",
+    "pg-promise": "^8.4.4",
+    "socket.io": "*"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.5"
+  }
+}

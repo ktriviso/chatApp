@@ -1,0 +1,32 @@
+.closed {
+  display: none;
+}
+
+.open {
+  display: block;
+  position: absolute;
+  top: 5rem;
+  background-color: white;
+  right: 5%;
+  width: 10rem;
+}
+
+#modal p {
+ font-size: 1rem;
+ padding: 1rem;
+}
+
+button {
+  border: none;
+  background: transparent;
+  margin: 0;
+  padding: 0;
+}
+
+#close_button {
+  background-color: #d7f2fe;
+  color: white;
+  width: 100%;
+  text-align: center;
+  padding: .3rem;
+}

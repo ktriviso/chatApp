@@ -1,0 +1,63 @@
+#userFormArea {
+  height: 45vh;
+  width: 30vw;
+  display: block;
+  margin: auto;
+  background-color: rgba(255,255,255,.5);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 15%;
+}
+
+h1 {
+  margin: auto;
+  color: white;
+  padding-bottom: 1rem;
+  text-align: center;
+}
+
+form {
+  margin: auto;
+}
+
+#userForm input {
+  margin-bottom: 1rem!important;
+  border: none;
+  border-bottom: 1px solid white;
+  background-color: transparent;
+}
+
+input:focus{
+    outline: none;
+    background-color: rgba(255,255,255, .4);
+}
+
+.userFormArea button {
+  background-color: white;
+  width: 100%;
+  text-align: center;
+  margin-top: 1rem!important;
+}
+
+p {
+  margin-bottom: 3rem!important;
+  text-align: center;
+  font-size: .7rem;
+  padding-top: 1rem;
+}
+
+a {
+  color: black!important;
+}
+
+button span {
+  background-color: rgba(255,255,255, .6);
+  padding: .5rem;
+}
+
+a {
+  display: inline;
+  list-style: none;
+}
