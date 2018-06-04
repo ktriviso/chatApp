@@ -17,6 +17,7 @@ export default class Profile extends React.Component {
       })
     }
   }
+  
   render () {
     const user = this.props.data.username
     const { isOpen, onClose } = this.props;

@@ -54,7 +54,6 @@ export default class Register extends Component {
     })
   }
 
-
   render() {
     const { userName, password } = this.state
 

@@ -9,22 +9,19 @@ export default class ActiveChat extends Component {
       messages: []
     }
   }
+
   componentWillMount() {
-    console.log(this.props.chatroom)
     this.setState({
       chatroom: this.props.chatroom
     })
   }
+  
   componentDidMount() {
-
     socket.on('new message', (msg) => {
-      console.log('WHY IS NOTHING HITTING IN HERE')
-      console.log(msg)
       let newMess = this.state.messages
       newMess.push(msg)
       this.setState({ messages: newMess })
     })
-
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -33,15 +30,12 @@ export default class ActiveChat extends Component {
         chatroom: this.props.chatroom
       })
     }
+
     if(prevProps.chatroom.messages !== this.props.chatroom.messages){
       const prev_chats = document.querySelector('#prev_chats')
       if(prev_chats){
         const children = prev_chats.childNodes
-        console.log(children)
-        console.log(children.length)
         children.forEach((elem) => {
-          console.log(elem)
-
           elem.remove()
         })
       }
@@ -53,12 +47,11 @@ export default class ActiveChat extends Component {
           prev_chats.appendChild(li)
         })
       }
-
     }
   }
 
   render() {
-    // console.log(this.props)
+
     return (
       <div>
         <h3>{this.state.chatroom.room ? this.state.chatroom.room : 'Chat.io'}</h3>

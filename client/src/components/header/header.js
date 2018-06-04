@@ -13,7 +13,6 @@ export default class Header extends Component {
   }
 
   openModal = () => {
-    console.log('im clicked')
     this.setState({ isModalOpen: true})
   }
 

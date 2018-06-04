@@ -1,5 +1,4 @@
 import React, {Component } from 'react'
-// import GroupChat from './groupChat'
 import socket from '../../../socket/api'
 import './private.css'
 
@@ -28,6 +27,7 @@ class PrivateChats extends Component {
     socket.on('create new chat', (newChatroom) => {
       this.addNewChat(newChatroom)
     })
+
     const rooms = document.querySelector('.rooms')
     this.props.userRooms.map((room, i) => {
       const li = document.createElement('li')
@@ -39,25 +39,16 @@ class PrivateChats extends Component {
     })
   }
 
-
   render() {
-    return ( <
-      div className = "rooms" > {
-        this.state.privateChats.map((chatroom, i) => ( <
-          li data = {
-            chatroom.room
-          }
-          key = {
-            i
-          }
-          onClick = {
-            this.setActiveChat
-          } > {
-            chatroom.room
-          } < /li>
+    return (
+      <div className = "rooms" > {
+        this.state.privateChats.map((chatroom, i) => (
+          <li data = {chatroom.room} key={i} onClick={this.setActiveChat}>
+            {chatroom.room}
+          </li>
         ))
-      }   <
-      /div>
+      }
+      </div>
     )
   }
 }

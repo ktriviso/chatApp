@@ -7,7 +7,6 @@
 - [Technologies](#Technologies)
 - [Submission](#Submission)
 - [Components](#Components)
-- [User Story](#User-Story)
 - [Issues and Resolutions](#Issues-and-Resolutions)
 
 ## Overview
@@ -22,52 +21,35 @@ This project depends on the following technologies:
 - Socket.io
 - React
 - Node
-- express
+- Express
 - SQL
 
 ## Submission
 
- ## Wireframes
 
-![Whiteboard Wireframe](./wireframe.jpg)
-
- ## MVP / Post-MVP
-
-![MVP](./mvp.jpg)
-
- ## Priority Matrix
-
-![Priority Matrix](./matrix.jpg)
-
- ## Routes
-
-![Route Chart](./routes.jpg)
 
 ## Components
-
-Based on the initial logic defined in the wireframes, the application is broken down into modular components.
 
 | Components    | Description                                            |
 | ------------- | ------------------------------------------------------ |
 | Header        | Displayed on every page with links to other components |
-| Home Page     | Logo                                                   |
 | Log-in Page   | Form for registered user                               |
 | Register Page | Form for new users                                     |
 | Public Chat   | Single shared chatroom for all users                   |
 | Private Chat  | Private chat room for one-on-one connection            |
 | Active Users  | Displays active users in the current chatroom          |
-| Profile       | Users profile                                          |
-
-
-## User Story
-
-### Landing Page
-
-something here:
-
--   something
+| Profile       | Users profile modal display users's chatroom(s)        |
 
 ## Issues and Resolutions
 
-ERROR:
+ERROR: chatrooms don't seem to be clearing or sending to the appropriate room but they're being stored in the database correctly.
+RESOLUTION:
+
+ERROR: Main chatroom doesn't initially load when you sign-in, user must click on the room for the previous contents to show.
+RESOLUTION:
+
+ERROR: Main chatroom doesn't initially load when you sign-in, user must click on the room for the previous contents to show.
+RESOLUTION:
+
+ERROR: Active users are only present after someone signs up so the users don't get an accurate read on how many active users are in the room. See line 67 in Chat component. It duplicates users so its commented out.
 RESOLUTION:

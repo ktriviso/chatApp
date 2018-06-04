@@ -40,11 +40,6 @@ export default class Login extends Component {
               userRooms.push(room.chatroom)
             }
           })
-
-          // console.log(messages)
-          console.log(userRooms, ' im the user rooms')
-          // console.log('authernticated user: ', authenticatedUser)
-
           history.push({
             pathname: `/chat`,
             state: { data: authenticatedUser, userRooms: userRooms }

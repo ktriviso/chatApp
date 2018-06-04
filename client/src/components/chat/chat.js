@@ -31,6 +31,7 @@ export default class Chat extends Component {
       this.handleActiveUsers(users)
     })
     socket.on('passing room state', (data) => {
+      console.log(data)
       this.replaceActiveChat(data)
     })
   }
@@ -63,7 +64,7 @@ export default class Chat extends Component {
       list_group.appendChild(li)
     }
 
-// this got really buggy and needs fixing. I woudl like it to work but for now its commented out
+// this got really buggy and needs fixing.
     // if (otherActiveUsers.length > 0) {
     //   console.log(otherActiveUsers)
     //   otherActiveUsers.forEach(user => {
@@ -96,11 +97,14 @@ export default class Chat extends Component {
   sendMessage = e => {
     e.preventDefault()
     const { message, currentUser } = this.state
+
     const data = {
       message: message,
       user: currentUser,
       chatroom: this.state.activeChat
     }
+    console.log(this.state.activeChat)
+    document.getElementById('message').value = ''
     console.log(data)
     socket.emit('send message', data)
   }
@@ -114,14 +118,12 @@ export default class Chat extends Component {
 
   render() {
     const { activeChat } = this.state
-    console.log(activeChat)
-    console.log(this.state.userRooms)
 
     return (
       <div>
         <Header data={this.state.currentUser} userRooms={this.state.userRooms}/>
         <div className="chat_component">
-          <PrivateChats replaceActiveChat={this.replaceActiveChat} userRooms={this.state.userRooms}/>
+          <PrivateChats userRooms={this.state.userRooms}/>
           <div className="active">
             <section>
               <h3>online users</h3>
