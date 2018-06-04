@@ -11,7 +11,7 @@ export default class Login extends Component {
 
   submitLogin = e => {
     e.preventDefault()
-    
+
     const { history } = this.props
 
     fetch('/login', {
@@ -27,24 +27,32 @@ export default class Login extends Component {
       .then((res) => {
         const authenticatedUser = res[1].authenticatedUser
         const messages = res[0]
-        console.log(messages)
-        console.log('this is the authernticated user')
-        console.log(authenticatedUser)
- 
+        const userRooms = ['main']
+
         if(authenticatedUser === false){
+          alert('It looks like you are still a guest, please register as a new user')
           history.push({
             pathname: `/`
           })
         } else {
+          res[0].forEach((room) => {
+            if(userRooms.indexOf(room.chatroom) === -1){
+              userRooms.push(room.chatroom)
+            }
+          })
+
+          // console.log(messages)
+          console.log(userRooms, ' im the user rooms')
+          // console.log('authernticated user: ', authenticatedUser)
+
           history.push({
             pathname: `/chat`,
-            state: { data: authenticatedUser }
+            state: { data: authenticatedUser, userRooms: userRooms }
           })
         }
- 
-      })
-      .catch(err => console.log(err))
 
+    })
+    .catch(err => console.log(err))
   }
 
   userNameInput = e => {
@@ -72,7 +80,7 @@ export default class Login extends Component {
           <br />
           <input type="text" value={password} onChange={this.passwordInput} placeholder="password" />
           <br />
-          <button className="btn" type="submit"><span>Sign Up</span></button>
+          <button className="btn" type="submit"><span>Log in</span></button>
         </form>
       </div>
     )

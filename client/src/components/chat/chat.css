@@ -16,6 +16,11 @@
   height: 100%;
 }
 
+.chat div {
+  height: 85%;
+    overflow: scroll;
+}
+
 .rooms {
   position: relative;
   width: 15%;
@@ -55,6 +60,9 @@ h3 {
 
 #messageForm {
   height: 25%;
+  position: absolute;
+  bottom: 0;
+  width: 65%;
 }
 
 .users_chats {
@@ -63,6 +71,12 @@ h3 {
   margin: 0;
   overflow: scroll;
   padding-left: .5rem;
+}
+
+#prev_chats {
+  padding-left: .5rem;
+  margin: 0;
+  background-color: rgba(255,255,255, .6);
 }
 
 .list-group li:before {
@@ -91,7 +105,7 @@ li span {
   margin-top: .5rem;
   width: 100%;
   outline: none;
-  /* margin-bottom: 1rem; */
+  margin-bottom: 1rem;
 }
 
 .btn {

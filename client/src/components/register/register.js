@@ -26,12 +26,18 @@ export default class Register extends Component {
     .then(res => res.json())
     .then((res) => {
       const {authenticatedUser} = res
-      history.push({
-        pathname: `/login`,
-        state: { data: authenticatedUser }
-      })
+      if(Object.keys(res).length === 0){
+        alert('Sorry, that username has already been taken.')
+      } else {
+        history.push({
+          pathname: `/login`,
+          state: { data: authenticatedUser }
+        })
+      }
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+      console.log(err)
+    })
   }
 
   userNameInput = e => {

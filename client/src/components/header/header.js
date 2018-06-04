@@ -27,10 +27,8 @@ export default class Header extends Component {
         <header className="header">
           <ul className='site_nav'>
             <Link to="/"><li id="logout" onClick={window.localStorage.clear()}>Logout</li></Link>
-
-                  <button onClick={this.openModal}>Profile</button>
-                  <Profile data={this.props.data} isOpen={this.state.isModalOpen} onClose={this.closeModal}/>
-
+              <button onClick={this.openModal}>Profile</button>
+              <Profile userRooms={this.props.userRooms} data={this.props.data} isOpen={this.state.isModalOpen} onClose={this.closeModal}/>
             <Link to="/chat"><li>Chatroom</li></Link>
           </ul>
         </header>

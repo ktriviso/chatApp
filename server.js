@@ -12,6 +12,7 @@ const bodyParser = require('body-parser');
 const users = []
 const connections = []
 let currentUser = ''
+const usersRooms = []
 
 app.use(express.static(path.resolve(__dirname, '../client/build')))
 app.use(bodyParser.json())
@@ -26,7 +27,6 @@ const authenticateUser = async (req) => {
   const {username, password} = req.body
   const existingUser = await db.getUser(username, password)
     .then((res) => {
-      console.log("Existing user ", res)
       return res
     })
     .catch((err) => {
@@ -43,7 +43,6 @@ const addUser = async (req) => {
   const {username, password} = req.body
   const existingUser = await db.getUser(username, password)
     .then((res) => {
-      console.log("Existing user ", res)
       return res
     })
     .catch((err) => {
@@ -51,8 +50,6 @@ const addUser = async (req) => {
     })
     if(!existingUser) {
       let newUser = await db.addUser(username, password).then((res) => {
-        console.log("New user ", res)
-        db.createReference(1, res.username)
         return res
       }).catch((err) => {
         console.log(err)
@@ -70,8 +67,14 @@ app.post('/register', async (req, res) => {
 app.post('/login', async (req, res) => {
   let authenticatedUser = await authenticateUser(req)
   let messages = await db.selectMessages(authenticatedUser.username)
-  console.log('these should be the users messages')
-  console.log(messages)
+  .then((res) => {
+    return res
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+  // Messages will come back undefined if this is a first time user so we need to handle that
+  messages = (messages && messages.length > 0) ? messages : []
   res.body = authenticatedUser
   res.send([messages, {authenticatedUser}])
  })
@@ -84,38 +87,52 @@ io.on('connection', socket => {
   connections.push(socket)
   console.log('connected: %s sockets connected', connections.length)
 
-
-  db.viewChatroom(1).then(data => {
-    console.log(data)
-    io.emit('new room', data)
-    io.emit('active users', users)
-  })
-
-  socket.on('current user', (user) => {
+  socket.on('current user', async (user) => {
+    db.createReference('main', user.username)
     users.push(user)
-    // this will log in the server all the users that are active 
-    console.log(user)
-    console.log(users)
-    io.emit('user activated', user, users)
-    // io.emit('active users', users)
+    const rooms = await db.returnReferences(user.username)
+    console.log('yo yo yo im the rooms')
+    console.log(rooms)
+    rooms.forEach((room) => {
+      socket.join(room.chatroom);
+      usersRooms.push(room.chatroom)
+    })
+    io.emit('user activated', user)
   })
 
-  socket.on('new private room', (data) => {
-    console.log('im the new room the user made')
-    console.log(data)
 
-    io.emit('create new chat', data)
-    db.createChatroom(data.room)
+
+  socket.on('new private room', async (data) => {
+    const checkpointOne = await db.checkRoomsExistence(data.sender, data.recipient)
+    .then((res) => {
+      return true
+    })
+    .catch((err) => {
+      return false
+    })
+    const checkpointTwo = await db.checkRoomsExistence(data.recipient, data.sender)
+    .then((res) => {
+      return true
+    })
+    .catch((err) => {
+      return false
+    })
+
+    if(!checkpointOne && !checkpointTwo){
+      db.createChatroom(data.room, data.sender, data.recipient)
+      db.createReference(data.room, data.sender)
+      db.createReference(data.room, data.recipient)
+      io.emit('create new chat', data)
+    } else {
+      const msg = 'there is already a private chat between these users'
+      io.emit('create new chat', msg)
+    }
   })
 
   socket.on('current room', async(room) => {
-    /*
-    When user changes chats this is where we request all the messages saveed to the new current chatroom and return them to the 
-    front end to display in the active chat
-    */
+    console.log('im the room ', room)
     const messages = await db.returnMessagesByChatroom(room)
       .then((res) => {
-        console.log(res)
         return res
       }).catch((err) => {
         console.log(err)
@@ -128,8 +145,6 @@ io.on('connection', socket => {
   })
 
   socket.on('check user', (data) => {
-    console.log('chceking me')
-    console.log(data)
     db.getUser(data.userName, data.password)
       .then((user) => {
         io.emit('auth', user)
@@ -140,13 +155,18 @@ io.on('connection', socket => {
       })
   })
 
+// this is the most important part! this is where it sends the messges to the specific room
   socket.on('send message', data => {
     db.storeMessage(data.message, data.user.username, data.chatroom.room)
-    io.emit('new message', data)
+    // io.emit('new message', data)
+    // io.to(data.chatroom.room).emit('new message', data);
+    // console.log('im the room: ', data.chatroom.room)
+    // console.log(data)
+    io.sockets.in(data.chatroom.room).emit('new message', data);
   })
 
   socket.on('disconnect', () => {
-    // users.splice(users.indexOf(socket.username), 1)
+    users.splice(users.indexOf(socket.username), 1)
     connections.splice(connections.indexOf(socket), 1)
     console.log('disconnected: %s sockets connected', connections.length)
   })

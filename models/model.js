@@ -23,24 +23,29 @@ module.exports = {
     `, [username, password]);
   },
 
-  // creates a reference between users, chatroom, messages
-  createReference(chatroom_id, username){
+  checkRoomsExistence(sender, recipient) {
     return db.one(`
-      INSERT INTO reference (chatroom_id, username)
-      VALUES($1, $2)
-      RETURNING *
-    `, [chatroom_id, username]);
+      SELECT *
+      FROM chatroom
+      WHERE sender = $1
+      AND recipient = $2
+    `, [sender, recipient])
   },
 
-  // get all from selected chatroom
-  returnReferences(chatroom_id){
+  createReference(chatroom, username){
+    return db.one(`
+      INSERT INTO reference (chatroom, username)
+      VALUES($1, $2)
+      RETURNING *
+    `, [chatroom, username]);
+  },
+
+  returnReferences(username){
     return db.many(`
-      SELECT *
+      SELECT chatroom
       FROM reference
-      JOIN users ON (reference.username = users.username)
-      JOIN chatroom ON (reference.chatroom_id = chatroom.chatroom_id)
-      WHERE chatroom_id = $1
-    `, chatroom_id);
+      WHERE username = $1
+    `, username);
   },
   //
   // deleteReference(user_id, chatroom_id, message_id){
@@ -94,19 +99,19 @@ module.exports = {
   },
 
   // create chatroom
-  createChatroom(name) {
+  createChatroom(name, sender, recipient) {
     return db.one(`
-      INSERT INTO chatroom (name)
-      VALUES ($1)
+      INSERT INTO chatroom (name, sender, recipient)
+      VALUES ($1, $2, $3)
       RETURNING *
-    `, name);
+    `, [name, sender, recipient]);
   },
 
-  viewChatroom(id) {
+  viewChatroom(name) {
     return db.one(`
       SELECT * from chatroom
-      WHERE chatroom_id = $1
-    `, id)
+      WHERE name = $1
+    `, name)
   }
 
 }
