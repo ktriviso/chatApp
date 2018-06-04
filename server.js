@@ -12,7 +12,7 @@ const bodyParser = require('body-parser');
 const users = []
 const connections = []
 let currentUser = ''
-// const usersRooms = []
+const usersRooms = []
 
 app.use(express.static(path.resolve(__dirname, '../client/build')))
 app.use(bodyParser.json())
@@ -88,20 +88,16 @@ io.on('connection', socket => {
   console.log('connected: %s sockets connected', connections.length)
 
   socket.on('current user', async (user) => {
-    console.log('im the user')
-    console.log(user)
     db.createReference('main', user.username)
+
     users.push(user)
     const rooms = await db.returnReferences(user.username)
-    const roomArray = []
+    console.log(rooms)
     rooms.forEach((room) => {
-      roomArray.push(room.chatroom)
-    })
-    const filteredRooms = [...new Set(roomArray)]
-    filteredRooms.forEach((room) => {
-      console.log(room)
-      socket.join(room);
-      // usersRooms.push(room)
+      console.log('rooms here: ')
+      console.log(room.chatroom)
+      socket.join(room.chatroom);
+      usersRooms.push(room.chatroom)
     })
     io.emit('user activated', user)
   })
@@ -128,7 +124,7 @@ io.on('connection', socket => {
       db.createReference(data.room, data.recipient)
       io.emit('create new chat', data)
     } else {
-      const msg = 'there is already a private chat between you guys'
+      const msg = 'there is already a private chat between these users'
       io.emit('create new chat', msg)
     }
   })
