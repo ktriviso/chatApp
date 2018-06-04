@@ -118,6 +118,7 @@ export default class Chat extends Component {
 
   render() {
     const { activeChat } = this.state
+    console.log(activeChat)
 
     return (
       <div>

@@ -26,6 +26,10 @@ This project depends on the following technologies:
 
 ## Submission
 
+https://github.com/ktriviso/chatApp
+
+Post Chatrooms working:
+https://github.com/ktriviso/chat.io
 
 
 ## Components
@@ -42,7 +46,7 @@ This project depends on the following technologies:
 
 ## Issues and Resolutions
 
-ERROR: chatrooms don't seem to be clearing or sending to the appropriate room but they're being stored in the database correctly.
+ERROR: chatrooms don't seem to be clearing or sending to the appropriate room but they're being stored in the database correctly. The rooms are working (sockets) but showing up still on both channels, I think this has to do with the state not being conditionally rendered properly. See line 23 in activeChat.js
 RESOLUTION:
 
 ERROR: Main chatroom doesn't initially load when you sign-in, user must click on the room for the previous contents to show.

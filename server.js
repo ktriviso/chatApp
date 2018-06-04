@@ -91,6 +91,7 @@ io.on('connection', socket => {
     db.createReference('main', user.username)
     users.push(user)
     const rooms = await db.returnReferences(user.username)
+    console.log(rooms)
     rooms.forEach((room) => {
       socket.join(room.chatroom);
       usersRooms.push(room.chatroom)
@@ -153,6 +154,8 @@ io.on('connection', socket => {
 // this is the most important part! this is where it sends the messges to the specific room
   socket.on('send message', data => {
     db.storeMessage(data.message, data.user.username, data.chatroom.room)
+    console.log(`emitting to: ${data.chatroom.room}. payload: ${data}`)
+    console.log(data)
     io.sockets.in(data.chatroom.room).emit('new message', data);
   })
 
